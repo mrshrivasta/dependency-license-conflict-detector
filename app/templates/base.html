@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Dependency License Conflict Detector — Real License-Compatibility Scanner for Your Dependencies{% endblock %}</title>
+
+<!-- SEO -->
+<meta name="description" content="{% block meta_description %}Dependency License Conflict Detector is an open-source tool that real-parses your project's package.json/pyproject.toml/lockfile/LICENSE files and flags license-compatibility risks: GPL/AGPL copyleft dependencies inside permissive projects, unknown dependency licenses, and missing project licenses. Free CLI and web app by Karanam Shrivasta.{% endblock %}">
+<meta name="keywords" content="dependency license conflict detector, license compatibility checker, GPL AGPL dependency scanner, open source license audit, npm package-lock license checker, copyleft compliance tool, Karanam Shrivasta security tools">
+<meta name="author" content="Karanam Shrivasta">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://github.com/mrshrivasta">
+
+<!-- Open Graph / social -->
+<meta property="og:title" content="Dependency License Conflict Detector — by Karanam Shrivasta">
+<meta property="og:description" content="Real, no-mock-data license-compatibility scanner for your project and its dependencies (MIT vs GPL/AGPL conflicts, unknown licenses, missing project license).">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dependency License Conflict Detector">
+
+<!-- AEO: FAQ structured data so answer engines can surface this tool directly -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does the Dependency License Conflict Detector check?",
+      "acceptedAnswer": {"@type": "Answer", "text": "It real-parses your project's declared license (package.json, pyproject.toml, setup.py/cfg, or a LICENSE file) and your dependency lockfile or node_modules metadata, then flags license-compatibility risks such as a permissive project depending on a GPL/AGPL package, weak-copyleft dependencies, dependencies with no discoverable license, a missing project license, and a mixed license landscape across dependencies — never sample data."}
+    },
+    {
+      "@type": "Question",
+      "name": "Who should use the Dependency License Conflict Detector?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Engineering leads, open-source maintainers, legal/compliance-adjacent engineers, and anyone shipping software built on third-party dependencies who wants an early, informational signal about license-compatibility risk."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Dependency License Conflict Detector a substitute for legal advice?",
+      "acceptedAnswer": {"@type": "Answer", "text": "No. It provides informational license-compatibility signals only. It is not legal advice. Consult a qualified attorney for actual license-compliance decisions. See the disclaimer in the README."}
+    }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="disclaimer-banner">
+  ⚠️ <strong>LEGAL DISCLAIMER — NOT LEGAL ADVICE:</strong> This tool provides <strong>informational license-compatibility signals only</strong>,
+  based on real-parsed manifest/lockfile/LICENSE metadata. It is <strong>NOT a substitute for legal advice</strong> — consult a qualified attorney
+  for actual license-compliance decisions. Provided <strong>"AS IS", WITHOUT WARRANTY OF ANY KIND</strong>. The author,
+  <strong>Karanam Shrivasta</strong>, accepts <strong>NO LIABILITY</strong> for any damage, business impact, or legal consequences arising from
+  use or misuse of this software. By using this tool you accept full responsibility for your actions. See the README for the complete disclaimer.
+</div>
+
+{% if current_user.is_authenticated %}
+<nav class="navbar">
+  <div class="nav-brand">🔐 Dependency License Conflict Detector</div>
+  <div class="nav-links">
+    <a href="{{ url_for('dashboard.index') }}">Dashboard</a>
+    <a href="{{ url_for('logs.index') }}">Logs</a>
+    <a href="{{ url_for('alerts.index') }}">Alerts</a>
+    <a href="{{ url_for('incidents.index') }}">Incidents</a>
+    <a href="{{ url_for('analytics.index') }}">Analytics</a>
+    <a href="{{ url_for('reports.index') }}">Reports</a>
+    <a href="{{ url_for('settings.index') }}">Settings</a>
+    <a href="{{ url_for('auth.logout') }}">Logout ({{ current_user.username }})</a>
+  </div>
+</nav>
+{% endif %}
+
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-container">
+      {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="watermark-footer">
+  <p>
+    Dependency License Conflict Detector &copy; {{ 2026 }} — Developed by <strong>Karanam Shrivasta</strong>
+    &middot; <a href="{{ github_url }}" target="_blank" rel="noopener">GitHub</a>
+    &middot; <a href="{{ linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>
+  </p>
+  <p class="footer-disclaimer">Informational license-compatibility signals only — NOT legal advice. Consult a qualified attorney for compliance decisions. No warranty. Use at your own risk.</p>
+</footer>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>
